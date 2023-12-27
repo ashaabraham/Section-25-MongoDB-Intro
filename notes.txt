@@ -1,0 +1,28 @@
+Section 25 MongoDB (NoSQL db)
+	alternate way of stopping/starting services:
+		net stop MongoDB
+		net start MongoDB
+	list existing dbs
+		show dbs
+	create/switch to db called ratingportal
+		use ratingportal
+	insert data into restaurants collection (collection will be created if it doesn't exist)
+		db.restaurants.insertOne({ name: "Munich Schnitzelhouse", address: {street: "Some Street 5", streetNumber: "23b" } })
+	read data - to get all documents in collection
+		db.restaurants.find()
+	read data - to get specific documents in collection
+		db.restaurants.find( {name: "Munich Schnitzelhouse"} )
+	read data - to get all documents in field but only include name field and exclude id field in collection (id is automatically included except if explicitly excluded, others are automatically excluded if you explicitly include at least one field).  First paramater is filter condition, second paramater is which fields to show in result
+		db.restaurants.find({}, {name: 1, _id:0} )
+	read data - to get one document  (findMany for multiple)
+		db.restaurants.findOne( {name: "Munich Schnitzelhouse"} )
+	update data (updates street of object with given id) updateMany for multiple
+		db.restaurants.updateOne({_id:ObjectId('658bb9d9d0dd0d12af331fe7')}, { $set: {"address.street": "Some Street"}})
+	delete data
+		db.restaurants.deleteOne({ _id: ObjectId('658bba53d0dd0d12af331fe8')})
+	delete all data
+		db.restaurants.deleteMany({})
+	find reviews with rating > 4
+		db.reviews.find({rating: {$gt: 4}})
+	find reviews with rating > 1 && < 3
+		db.reviews.find({$and: [{rating: {$gt: 1}}, {rating: {$lt: 3}}] })
